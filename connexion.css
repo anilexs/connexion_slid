@@ -1,0 +1,511 @@
+/* Importation d'une police depuis Google Fonts */
+@import url("https://fonts.googleapis.com/css?family=Proxima Nova:400,800");
+
+.google{
+    width: 100%;
+    height: 300px;
+    z-index: 800;
+    background-color: red;
+}
+
+/* Styles généraux pour l'ensemble de la page */
+* {
+  box-sizing: border-box;
+  width: 100%;
+  overflow: hidden;
+}
+
+/* Styles spécifiques pour les balises img avec les classes 'bot' et 'standard' */
+img .bot {
+  max-width: 30%;
+}
+
+/* Styles spécifiques pour les balises img avec la classe 'standard' */
+img.standard {
+  max-width: 40%;
+}
+
+
+/* Media query pour les écrans plus larges (à partir de 769px) */
+@media screen and (min-width: 769px) {
+  
+  /* Styles généraux pour le corps de la page */
+  body {
+    background: #f6f5f7;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    font-family: "Montserrat", sans-serif;
+    height: 100vh;
+    margin: -20px 0 50px;
+  }
+
+  /* Styles pour le titre principal (h1) */
+  h1 {
+    font-weight: bold;
+    margin: 0;
+  }
+
+  /* Styles pour un élément avec la classe "titre" à l'intérieur de h1 */
+  h1 .titre {
+    font-size: larger;
+  }
+
+  /* Styles pour le sous-titre (h2) */
+  h2 {
+    text-align: center;
+  }
+
+  /* Styles pour les paragraphes (p) */
+  p {
+    font-size: 16px;
+    font-weight: 100;
+    line-height: 20px;
+    letter-spacing: 0.5px;
+    margin: 20px 0 30px;
+  }
+
+  /* Styles pour les éléments de texte génériques (span) */
+  span {
+    font-size: 12px;
+  }
+
+  /* Styles pour les liens (a) */
+  a {
+    color: #333;
+    font-size: 14px;
+    text-decoration: none;
+    margin: 15px 0;
+  }
+
+  /* Styles pour les boutons génériques */
+  button {
+    border-radius: 20px;
+    border: 1px solid #a136f6;
+    background-color: #a136f6;
+    color: #ffffff;
+    font-size: 12px;
+    font-weight: bold;
+    padding: 12px 45px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    transition: transform 80ms ease-in;
+  }
+
+  /* Styles pour l'effet de clic sur les boutons */
+  button:active {
+    transform: scale(0.95);
+  }
+
+  /* Styles pour les boutons au focus */
+  button:focus {
+    outline: none;
+  }
+
+  /* Styles pour les boutons avec une classe "ghost" */
+  button.ghost {
+    background-color: transparent;
+    border-color: #ffffff;
+  }
+
+  /* Styles pour le formulaire */
+  form {
+    background-color: #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    padding: 0 50px;
+    height: 100%;
+    text-align: center;
+    background-image: url('../images/circuit-2.png');
+    background-size: 145em;
+  }
+
+  /* Styles pour les champs de saisie */
+  input {
+    background-color: #eee;
+    border: none;
+    padding: 12px 15px;
+    margin: 8px 0;
+    width: 100%;
+  }
+
+  /* Styles pour le conteneur du formulaire */
+  .form-container {
+    position: absolute;
+    top: 0;
+    height: 100%;
+    transition: all 0.6s ease-in-out;
+  }
+
+  /* Styles pour le conteneur du formulaire de connexion */
+  .sign-in-container {
+    left: 0;
+    width: 50%;
+    z-index: 2;
+    background-image: url('../images/circuit-2.png');
+    background-size: 100em;
+  }
+
+  /* Styles pour le formulaire de connexion lorsqu'il est actif */
+  .container.right-panel-active .sign-in-container {
+    transform: translateX(100%);
+  }
+
+  /* Styles pour le conteneur du formulaire d'inscription */
+  .sign-up-container {
+    left: 0;
+    width: 50%;
+    opacity: 0;
+    z-index: 1;
+  }
+
+  /* Animation pour montrer le formulaire d'inscription */
+  .container.right-panel-active .sign-up-container {
+    transform: translateX(100%);
+    opacity: 1;
+    z-index: 5;
+    animation: show 0.6s;
+  }
+  /**/
+
+  /* Animation de transition entre les formulaires */
+  @keyframes show {
+    0%, 49.99% {
+      opacity: 0;
+      z-index: 1;
+    }
+
+    50%, 100% {
+      opacity: 1;
+      z-index: 5;
+    }
+  }
+  /* Fin de l'animation */
+
+  /* Styles pour le conteneur de superposition */
+  .overlay-container {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    width: 50%;
+    height: 100%;
+    overflow: hidden;
+    transition: transform 0.6s ease-in-out;
+    z-index: 100;
+  }
+
+  /* Styles pour le conteneur de superposition lorsqu'il est actif */
+  .container.right-panel-active .overlay-container {
+    transform: translateX(-100%);
+  }
+
+  /* Styles pour l'arrière-plan de la superposition */
+  .overlay {
+    background: #a136f6;
+    background: -webkit-linear-gradient(to right, #a136f6, #221030);
+    background: linear-gradient(to right, #a136f6, #221030);
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: 0 0;
+    color: #ffffff;
+    position: relative;
+    left: -100%;
+    height: 100%;
+    width: 200%;
+    transform: translateX(0);
+    transition: transform 0.6s ease-in-out;
+  }
+
+  /* Styles pour l'arrière-plan de la superposition lorsqu'il est actif */
+  .container.right-panel-active .overlay {
+    transform: translateX(50%);
+  }
+
+  /* Styles pour le panneau de superposition (gauche) */
+  .overlay-panel {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    padding: 0 40px;
+    text-align: center;
+    top: 0;
+    height: 100%;
+    width: 50%;
+    transform: translateX(0);
+    transition: transform 0.6s ease-in-out;
+  }
+
+  /* Styles pour le panneau de superposition à gauche lorsqu'il est actif */
+  .overlay-left {
+    transform: translateX(-20%);
+  }
+
+  /* Styles pour le panneau de superposition à gauche lorsqu'il est actif */
+  .container.right-panel-active .overlay-left {
+    transform: translateX(0);
+  }
+
+  /* Styles pour le panneau de superposition (droite) */
+  .overlay-right {
+    right: 0;
+    transform: translateX(0);
+  }
+
+  /* Styles pour le panneau de superposition à droite lorsqu'il est actif */
+  .container.right-panel-active .overlay-right{
+    transform: translateX(20%);
+  }
+}
+
+
+
+/*------------------Mobile----------------------------*/
+@media screen and (max-width: 768px) {
+
+  /* Styles généraux pour le corps de la page sur les petits écrans */
+  body {
+    background: #f6f5f7;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    font-family: "Montserrat", sans-serif;
+    height: 100vh;
+    margin: -20px 0 50px;
+  }
+
+  /* Styles pour le titre principal de la page */
+  h1 {
+    font-weight: bold;
+    margin: 0;
+  }
+
+  /* Styles pour le sous-titre du titre principal */
+  h1 .titre {
+    font-size: larger;
+  }
+
+  /* Styles pour le titre de niveau 2 */
+  h2 {
+    text-align: center;
+  }
+
+  /* Styles pour les paragraphes */
+  p {
+    font-size: 16px;
+    font-weight: 100;
+    line-height: 20px;
+    letter-spacing: 0.5px;
+    margin: 20px 0 30px;
+  }
+
+  /* Styles pour les éléments de texte en ligne */
+  span {
+    font-size: 12px;
+  }
+
+  /* Styles pour les liens */
+  a {
+    color: #333;
+    font-size: 14px;
+    text-decoration: none;
+    margin: 15px 0;
+  }
+
+  /* Styles pour les boutons */
+  button {
+    border-radius: 20px;
+    border: 1px solid #a136f6;
+    background-color: #a136f6;
+    color: #ffffff;
+    font-size: 12px;
+    font-weight: bold;
+    padding: 12px 45px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    transition: transform 80ms ease-in;
+  }
+
+  /* Styles pour le comportement des boutons au clic */
+  button:active {
+    transform: scale(0.95);
+  }
+
+  /* Styles pour le focus sur les boutons */
+  button:focus {
+    outline: none;
+  }
+
+  /* Styles pour les boutons "ghost" */
+  button.ghost {
+    background-color: transparent;
+    border-color: #ffffff;
+  }
+
+  /* Styles pour le formulaire */
+  form {
+    background-color: #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    padding: 0 50px;
+    height: 100%;
+    text-align: center;
+    background-image: url('../images/circuit-2.png');
+    background-size: 145em;
+  }
+
+  /* Styles pour les champs de saisie du formulaire */
+  input {
+    background-color: #eee;
+    border: none;
+    padding: 12px 15px;
+    margin: 8px 0;
+    width: 100%;
+  }
+
+  /* Styles pour le conteneur du formulaire */
+  .form-container {
+    position: absolute;
+    top: 0;
+    height: 50%;
+    transition: all 0.6s ease-in-out;
+  }
+
+  /* Styles pour le conteneur de connexion */
+  .sign-in-container {
+    left: 0;
+    width: 100%;
+    z-index: 2;
+    background-image: url('../images/circuit-2.png');
+    background-size: 100em;
+  }
+
+  /* Styles pour le conteneur de connexion actif lorsqu'il est activé */
+  .container.right-panel-active .sign-in-container {
+    transform: translateY(100%);
+  }
+
+  /* Styles pour le conteneur d'inscription */
+  .sign-up-container {
+    left: 0;
+    width: 100%;
+    opacity: 0;
+    z-index: 1;
+  }
+
+  /* Styles pour la colonne de gauche lorsqu'elle est activée */
+  .container.right-panel-active .sign-up-container {
+    transform: translateY(100%);
+    opacity: 1;
+    z-index: 5;
+    animation: show 0.6s;
+  }
+
+  /* Définition de l'animation "show" */
+  @keyframes show {
+    0%, 49.99% {
+      opacity: 0;
+      z-index: 1;
+    }
+
+    50%, 100% {
+      opacity: 1;
+      z-index: 5;
+    }
+  }
+
+  /* Styles pour le conteneur de superposition */
+  .overlay-container {
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    width: 50%;
+    height: 50%;
+    overflow: visible;
+    transition: transform 0.6s ease-in-out;
+    z-index: 100;
+  }
+
+  /* Styles pour le conteneur de superposition actif lorsqu'il est activé */
+  .container.right-panel-active .overlay-container {
+    transform: translateY(-150%);
+  }
+
+  /* Styles pour l'arrière-plan de superposition */
+  .overlay {
+    background: #a136f6;
+    background: -webkit-linear-gradient(to right, #a136f6, #221030);
+    background: linear-gradient(to right, #a136f6, #221030);
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: 0 0;
+    color: #ffffff;
+    position: relative;
+    left: -100%;
+    height: 100%;
+    width: 200%;
+    transform: translateY(0);
+    transition: transform 0.6s ease-in-out;
+  }
+
+  /* Styles pour l'arrière-plan de superposition actif lorsqu'il est activé */
+  .container.right-panel-active .overlay {
+    transform: translateY(50%);
+  }
+
+  /* Styles pour le panneau de superposition */
+  .overlay-panel {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    padding: 0 40px;
+    text-align: center;
+    top: 25%;
+    height: 50%;
+    width: 100%;
+    transform: translateY(0);
+    transition: transform 0.6s ease-in-out;
+  }
+
+  /* Styles pour les boutons dans le panneau de superposition */
+  .overlay-panel button {
+    width: 45%;
+  }
+
+  /* Styles pour la colonne de gauche dans le panneau de superposition */
+  .overlay-left {
+    transform: translateY(200%);
+  }
+
+  /* Styles pour la colonne de gauche dans le panneau de superposition lorsqu'elle est activée */
+  .container.right-panel-active .overlay-left {
+    transform: translateY(0%);
+  }
+
+  /* Styles pour la colonne de droite dans le panneau de superposition */
+  .overlay-right {
+    right: 0;
+    transform: translateY(0%);
+  }
+
+  /* Styles pour la colonne de droite dans le panneau de superposition lorsqu'elle est activée */
+  .container.right-panel-active .overlay-right {
+    transform: translateY(-200%);
+  }
+  
+  /* Styles pour la colonne de droite dans le panneau de superposition lorsqu'elle est activée */
+  .container.right-panel-active .overlay-right {
+    transform: translateY(-200%);
+  }
+
+}
+
