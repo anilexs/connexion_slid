@@ -64,6 +64,26 @@ if(isset($_POST['logout'])){
     setcookie("user_id", "", time() - 3600, "/", DOMAINNAME);
 }
 
-if(isset($_POST['credential'])){
-    
+if (isset($_POST['credential'])) {
+    $credential = $_POST['credential'];
+
+    // Séparer le JWT en parties
+    list($header, $payload, $signature) = explode('.', $credential);
+
+    // Décoder les parties Base64
+    $decodedHeader = base64_decode($header);
+    $decodedPayload = base64_decode($payload);
+
+    // Convertir les parties JSON en tableau associatif
+    $headerData = json_decode($decodedHeader, true);
+    $payloadData = json_decode($decodedPayload, true);
+
+    // Afficher les informations de l'utilisateur
+    $name = $payloadData['given_name'] ?? '';
+    $family_name = $payloadData['family_name'] ?? '';
+    $email = $payloadData['email'] ?? '';
+
+    echo "Nom: $name<br>";
+    echo "Prénom: $family_name<br>";
+    echo "Email: $email<br>";
 }
