@@ -2,12 +2,11 @@
 require_once "database.php";
 define("DOMAINNAME", "localhost");
 
-
 if(isset($_POST['sign-In'])){
+    $db = Database::dbConnect();
     $email = htmlspecialchars($_POST['email']);
     $password = htmlspecialchars($_POST['password']);
 
-    $db = Database::dbConnect();
     $request = $db->prepare("SELECT * FROM `user` WHERE email = ?");
     try {
         $request->execute(array($email));
@@ -67,23 +66,52 @@ if(isset($_POST['logout'])){
 if (isset($_POST['credential'])) {
     $credential = $_POST['credential'];
 
-    // Séparer le JWT en parties
     list($header, $payload, $signature) = explode('.', $credential);
 
-    // Décoder les parties Base64
     $decodedHeader = base64_decode($header);
     $decodedPayload = base64_decode($payload);
 
-    // Convertir les parties JSON en tableau associatif
     $headerData = json_decode($decodedHeader, true);
     $payloadData = json_decode($decodedPayload, true);
 
-    // Afficher les informations de l'utilisateur
     $name = $payloadData['given_name'] ?? '';
-    $family_name = $payloadData['family_name'] ?? '';
     $email = $payloadData['email'] ?? '';
+    $sub = $payloadData['sub'] ?? '';
+    $hashedSub = password_hash($sub, PASSWORD_DEFAULT);
 
-    echo "Nom: $name<br>";
-    echo "Prénom: $family_name<br>";
-    echo "Email: $email<br>";
+    $db = Database::dbConnect();
+    $request = $db->prepare("SELECT google_sub FROM `user` WHERE google_email = ?");
+
+    try {
+        $request->execute(array($email));
+        $userSub = $request->fetch(PDO::FETCH_ASSOC);
+        $acount = (!empty($userSub)) ? true : false;
+        if($acount){
+            if(password_verify($sub, $userSub['google_sub'])){
+                $request = $db->prepare("SELECT * FROM `user` WHERE google_email = ?");
+                $request->execute(array($email));
+                $userInfo = $request->fetch(PDO::FETCH_ASSOC);
+                setcookie("user_id", $userInfo['id_user'], time() + 3600 * 5, "/", DOMAINNAME);
+                echo 'connexion sucefull';
+            }else{
+                echo 'erreur de connexion <a href="connexion.html">page de connexion</a>';
+            }
+        }else{
+            $request = $db->prepare("INSERT INTO user (google_email, google_sub) VALUES (?,?)");
+            $request->execute(array($email, $hashedSub));
+            $lastUserId = $db->lastInsertId();
+            setcookie("user_id", $lastUserId, time() + 3600 * 5, "/", DOMAINNAME);
+            echo 'inscription sucefull';
+            
+        }
+        // echo $userSub['google_sub'];
+        // setcookie("user_id", $lastUserId, time() + 3600 * 5, "/", DOMAINNAME);
+    } catch (PDOException $e) {
+        echo $e->getMessage();
+    }
+
+    // echo "Nom: $name<br>";
+    // echo "Email: $email<br>";
+    // echo "sub: $sub<br>";
+    // echo "sub hach: $hashedSub<br>";
 }
